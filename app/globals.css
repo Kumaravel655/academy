@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Sunshine Academy Theme - Warm golden & orange */
+    --background: 45 100% 95%;
+    --foreground: 25 80% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 80% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 80% 15%;
+    --primary: 38 100% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 20 95% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 45 50% 85%;
+    --muted-foreground: 25 30% 55%;
+    --accent: 38 100% 52%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 100% 88%;
+    --input: 45 100% 93%;
+    --ring: 38 100% 52%;
+    --chart-1: 38 100% 52%;
+    --chart-2: 20 95% 50%;
+    --chart-3: 15 95% 55%;
+    --chart-4: 45 100% 60%;
+    --chart-5: 30 95% 55%;
+    --radius: 0.5rem;
+    --sidebar-background: 45 100% 95%;
+    --sidebar-foreground: 25 80% 15%;
+    --sidebar-primary: 38 100% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 38 100% 52%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 45 100% 88%;
+    --sidebar-ring: 38 100% 52%;
+  }
+  .dark {
+    --background: 45 100% 95%;
+    --foreground: 25 80% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 80% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 80% 15%;
+    --primary: 38 100% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 20 95% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 45 50% 85%;
+    --muted-foreground: 25 30% 55%;
+    --accent: 38 100% 52%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 100% 88%;
+    --input: 45 100% 93%;
+    --ring: 38 100% 52%;
+    --chart-1: 38 100% 52%;
+    --chart-2: 20 95% 50%;
+    --chart-3: 15 95% 55%;
+    --chart-4: 45 100% 60%;
+    --chart-5: 30 95% 55%;
+    --sidebar-background: 45 100% 95%;
+    --sidebar-foreground: 25 80% 15%;
+    --sidebar-primary: 38 100% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 38 100% 52%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 45 100% 88%;
+    --sidebar-ring: 38 100% 52%;
+  }
+}
+
+/* Sunshine Animations */
+@keyframes sunRise {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sunGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.3), 0 0 40px rgba(255, 152, 0, 0.2), 0 0 60px rgba(255, 193, 7, 0.1);
+  }
+  33% {
+    box-shadow: 0 0 30px rgba(255, 193, 7, 0.5), 0 0 60px rgba(255, 152, 0, 0.3), 0 0 90px rgba(255, 193, 7, 0.15);
+  }
+  66% {
+    box-shadow: 0 0 25px rgba(255, 152, 0, 0.4), 0 0 50px rgba(255, 193, 7, 0.25), 0 0 80px rgba(255, 152, 0, 0.12);
+  }
+}
+
+@keyframes sunFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes sunSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lightBeam {
+  0% {
+    opacity: 0;
+    transform: scaleY(0) translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scaleY(1) translateY(-10px);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1.2) translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes sunRays {
+  0% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.25;
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0.15;
+  }
+}
+
+@keyframes sunPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes sunWave {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(10px) translateY(-10px);
+  }
+  50% {
+    transform: translateX(0) translateY(-20px);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-10px);
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-100px) translateX(20px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.animate-sun-rise {
+  animation: sunRise 0.8s ease-out;
+}
+
+.animate-sun-glow {
+  animation: sunGlow 3s ease-in-out infinite;
+}
+
+.animate-sun-float {
+  animation: sunFloat 4s ease-in-out infinite;
+}
+
+.animate-sun-spin {
+  animation: sunSpin 10s linear infinite;
+}
+
+.animate-light-beam {
+  animation: lightBeam 2s ease-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.animate-sun-rays {
+  animation: sunRays 20s linear infinite;
+}
+
+.animate-sun-pulse {
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+.animate-sun-wave {
+  animation: sunWave 6s ease-in-out infinite;
+}
+
+.animate-particle-float {
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

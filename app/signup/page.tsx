@@ -72,33 +72,39 @@ export default function SignupPage() {
   return (
     <main>
       <Header />
-      <section className="min-h-screen bg-background py-12 px-4">
-        <div className="max-w-md mx-auto mt-10">
-          <div className="bg-card border border-border rounded-lg p-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2 text-center">
-              Create Account
-            </h1>
-            <p className="text-muted-foreground text-center mb-8">
-              Join Velandev Academy and start learning
-            </p>
+
+      {/* Hero Header */}
+      <section className="relative bg-gradient-to-br from-slate-900 via-primary/80 to-slate-900 pt-32 pb-20 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Create Account</h1>
+          <p className="text-lg text-white/70">Join Sunshine Academy and start learning today</p>
+        </div>
+      </section>
+
+      <section className="py-16 bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-950 px-4">
+        <div className="max-w-md mx-auto -mt-28 relative z-20">
+          <div className="bg-white dark:bg-gray-800 border border-border/60 rounded-2xl p-8 shadow-premium-lg">
 
             {error && (
-              <div className="mb-6 p-4 bg-red-900/20 border border-red-900/50 rounded-lg flex items-start gap-3">
+              <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 rounded-xl flex items-start gap-3">
                 <AlertCircle size={20} className="text-red-500 flex-shrink-0 mt-0.5" />
-                <p className="text-red-200">{error}</p>
+                <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
               </div>
             )}
 
             {success && (
-              <div className="mb-6 p-4 bg-green-900/20 border border-green-900/50 rounded-lg flex items-start gap-3">
-                <CheckCircle size={20} className="text-green-500 flex-shrink-0 mt-0.5" />
-                <p className="text-green-200">{success}</p>
+              <div className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 rounded-xl flex items-start gap-3">
+                <CheckCircle size={20} className="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <p className="text-emerald-700 dark:text-emerald-300 text-sm">{success}</p>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-sm font-semibold text-foreground mb-2">
                   Full Name
                 </label>
                 <Input
@@ -107,13 +113,13 @@ export default function SignupPage() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="John Doe"
-                  className="w-full bg-background border-border text-foreground"
+                  className="w-full bg-slate-50 dark:bg-gray-700 border-border/60 text-foreground rounded-xl h-12 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   disabled={loading}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-sm font-semibold text-foreground mb-2">
                   Email
                 </label>
                 <Input
@@ -122,13 +128,13 @@ export default function SignupPage() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="you@example.com"
-                  className="w-full bg-background border-border text-foreground"
+                  className="w-full bg-slate-50 dark:bg-gray-700 border-border/60 text-foreground rounded-xl h-12 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   disabled={loading}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-sm font-semibold text-foreground mb-2">
                   Password
                 </label>
                 <Input
@@ -137,13 +143,13 @@ export default function SignupPage() {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full bg-background border-border text-foreground"
+                  className="w-full bg-slate-50 dark:bg-gray-700 border-border/60 text-foreground rounded-xl h-12 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   disabled={loading}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
+                <label className="block text-sm font-semibold text-foreground mb-2">
                   Confirm Password
                 </label>
                 <Input
@@ -152,23 +158,23 @@ export default function SignupPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full bg-background border-border text-foreground"
+                  className="w-full bg-slate-50 dark:bg-gray-700 border-border/60 text-foreground rounded-xl h-12 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   disabled={loading}
                 />
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-2"
+                className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-semibold h-12 rounded-xl shadow-lg transition-all hover:shadow-xl"
                 disabled={loading}
               >
                 {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
             </form>
 
-            <p className="text-center text-muted-foreground mt-6">
+            <p className="text-center text-muted-foreground mt-6 text-sm">
               Already have an account?{' '}
-              <Link href="/login" className="text-primary hover:underline font-medium">
+              <Link href="/login" className="text-primary hover:underline font-semibold">
                 Login here
               </Link>
             </p>

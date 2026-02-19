@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './auth-context';
+import { api } from './api';
 
 export interface Enrollment {
   courseId: string;
@@ -29,7 +30,7 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
 
-  // Load user data from localStorage
+  // Load user data from API
   useEffect(() => {
     if (!user) {
       setEnrollments([]);
@@ -37,37 +38,28 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const userDataKey = `userdata_${user.id}`;
-    const savedData = localStorage.getItem(userDataKey);
-    if (savedData) {
-      try {
-        const data = JSON.parse(savedData);
-        setEnrollments(data.enrollments || []);
-        setWishlist(data.wishlist || []);
-      } catch (error) {
-        console.error('Failed to parse user data:', error);
-      }
-    }
-  }, [user]);
-
-  // Save user data to localStorage whenever it changes
-  useEffect(() => {
-    if (!user) return;
-
-    const userDataKey = `userdata_${user.id}`;
-    localStorage.setItem(
-      userDataKey,
-      JSON.stringify({
-        enrollments,
-        wishlist,
+    api.enrollments.list()
+      .then((data: any[]) => {
+        setEnrollments(data.map((e: any) => ({
+          courseId: e.courseId,
+          enrolledAt: e.enrolledAt,
+          progress: e.progress,
+          completed: e.completed,
+        })));
       })
-    );
-  }, [enrollments, wishlist, user]);
+      .catch(console.error);
+
+    api.wishlist.list()
+      .then((courses: any[]) => {
+        setWishlist(courses.map((c: any) => c.id));
+      })
+      .catch(console.error);
+  }, [user]);
 
   const enrollCourse = (courseId: string) => {
     if (!isEnrolled(courseId)) {
-      setEnrollments([
-        ...enrollments,
+      setEnrollments((prev) => [
+        ...prev,
         {
           courseId,
           enrolledAt: new Date().toISOString(),
@@ -75,18 +67,35 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
           completed: false,
         },
       ]);
+      api.enrollments.enroll(courseId).catch((err) => {
+        setEnrollments((prev) => prev.filter((e) => e.courseId !== courseId));
+        console.error('Enroll failed:', err);
+      });
     }
   };
 
   const unenrollCourse = (courseId: string) => {
+    const prev = enrollments;
     setEnrollments(enrollments.filter((e) => e.courseId !== courseId));
+    api.enrollments.unenroll(courseId).catch((err) => {
+      setEnrollments(prev);
+      console.error('Unenroll failed:', err);
+    });
   };
 
   const toggleWishlist = (courseId: string) => {
     if (wishlist.includes(courseId)) {
       setWishlist(wishlist.filter((id) => id !== courseId));
+      api.wishlist.remove(courseId).catch((err) => {
+        setWishlist((prev) => [...prev, courseId]);
+        console.error('Wishlist remove failed:', err);
+      });
     } else {
       setWishlist([...wishlist, courseId]);
+      api.wishlist.add(courseId).catch((err) => {
+        setWishlist((prev) => prev.filter((id) => id !== courseId));
+        console.error('Wishlist add failed:', err);
+      });
     }
   };
 
@@ -99,13 +108,15 @@ export function UserDataProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateProgress = (courseId: string, progress: number) => {
+    const clampedProgress = Math.min(100, Math.max(0, progress));
     setEnrollments(
       enrollments.map((e) =>
         e.courseId === courseId
-          ? { ...e, progress: Math.min(100, Math.max(0, progress)), completed: progress >= 100 }
+          ? { ...e, progress: clampedProgress, completed: clampedProgress >= 100 }
           : e
       )
     );
+    api.enrollments.updateProgress(courseId, clampedProgress).catch(console.error);
   };
 
   const getProgress = (courseId: string) => {

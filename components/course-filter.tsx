@@ -26,7 +26,7 @@ export function CourseFilter({
   const hasActiveFilters = selectedCategory || selectedLevel || selectedPrice !== 'all';
 
   return (
-    <div className="bg-card border border-border rounded-lg p-6 h-fit sticky top-20">
+    <div className="bg-white dark:bg-gray-800 border border-border/60 rounded-2xl p-6 h-fit sticky top-20 shadow-premium">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-bold text-foreground">Filters</h3>
         {hasActiveFilters && (

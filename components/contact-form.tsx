@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2 } from 'lucide-react';
+import { api } from '@/lib/api';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -25,11 +26,14 @@ export function ContactForm() {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setSubmitted(true);
-    setLoading(false);
+    try {
+      await api.contact.submit(formData);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+    } finally {
+      setLoading(false);
+    }
 
     // Reset form after 3 seconds
     setTimeout(() => {
@@ -40,8 +44,10 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="bg-card border border-border rounded-lg p-8 sm:p-12 flex flex-col items-center justify-center min-h-96">
-        <CheckCircle2 size={64} className="text-primary mb-6" />
+      <div className="bg-white dark:bg-gray-800 border border-border/60 rounded-2xl p-8 sm:p-12 flex flex-col items-center justify-center min-h-96 shadow-premium">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-6">
+          <CheckCircle2 size={32} className="text-white" />
+        </div>
         <h3 className="text-2xl font-bold text-foreground mb-2">Message Sent!</h3>
         <p className="text-muted-foreground text-center max-w-md">
           Thank you for reaching out. We will get back to you as soon as possible.
@@ -53,7 +59,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-card border border-border rounded-lg p-8 sm:p-12"
+      className="bg-white dark:bg-gray-800 border border-border/60 rounded-2xl p-8 sm:p-12 shadow-premium"
     >
       <h3 className="text-2xl font-bold text-foreground mb-8">Get in Touch</h3>
 
@@ -62,7 +68,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-foreground mb-2"
+            className="block text-sm font-semibold text-foreground mb-2"
           >
             Full Name
           </label>
@@ -73,7 +79,7 @@ export function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg bg-secondary text-foreground placeholder-muted-foreground border border-border focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-gray-700 text-foreground placeholder-muted-foreground border border-border/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             placeholder="John Doe"
           />
         </div>
@@ -82,7 +88,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-foreground mb-2"
+            className="block text-sm font-semibold text-foreground mb-2"
           >
             Email Address
           </label>
@@ -93,7 +99,7 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg bg-secondary text-foreground placeholder-muted-foreground border border-border focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-gray-700 text-foreground placeholder-muted-foreground border border-border/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
             placeholder="john@example.com"
           />
         </div>
@@ -102,7 +108,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="subject"
-            className="block text-sm font-medium text-foreground mb-2"
+            className="block text-sm font-semibold text-foreground mb-2"
           >
             Subject
           </label>
@@ -112,7 +118,7 @@ export function ContactForm() {
             value={formData.subject}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 rounded-lg bg-secondary text-foreground border border-border focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-gray-700 text-foreground border border-border/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
           >
             <option value="">Select a subject...</option>
             <option value="course-inquiry">Course Inquiry</option>
@@ -127,7 +133,7 @@ export function ContactForm() {
         <div>
           <label
             htmlFor="message"
-            className="block text-sm font-medium text-foreground mb-2"
+            className="block text-sm font-semibold text-foreground mb-2"
           >
             Message
           </label>
@@ -138,7 +144,7 @@ export function ContactForm() {
             onChange={handleChange}
             required
             rows={6}
-            className="w-full px-4 py-3 rounded-lg bg-secondary text-foreground placeholder-muted-foreground border border-border focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-gray-700 text-foreground placeholder-muted-foreground border border-border/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none"
             placeholder="Please share your message or question here..."
           />
         </div>
@@ -147,7 +153,7 @@ export function ContactForm() {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-base"
+          className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white h-12 text-base rounded-xl shadow-lg transition-all hover:shadow-xl font-semibold"
         >
           {loading ? 'Sending...' : 'Send Message'}
         </Button>

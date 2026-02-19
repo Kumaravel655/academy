@@ -26,8 +26,8 @@ export function EnrollmentModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-card border border-border rounded-lg max-w-md w-full p-8 animate-in fade-in zoom-in-95">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 border border-border/60 rounded-2xl max-w-md w-full p-8 animate-in fade-in zoom-in-95 shadow-2xl">
         <div className="flex justify-between items-start mb-6">
           <h2 className="text-2xl font-bold text-foreground">Confirm Enrollment</h2>
           <button
@@ -39,9 +39,9 @@ export function EnrollmentModal({
         </div>
 
         <div className="space-y-6">
-          <div className="bg-background/50 rounded-lg p-4">
+          <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-xl p-5 border border-border/60">
             <h3 className="font-semibold text-foreground mb-2">{courseName}</h3>
-            <p className="text-3xl font-bold text-primary">₹{coursePrice}</p>
+            <p className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">₹{coursePrice}</p>
           </div>
 
           <div className="space-y-3">
@@ -70,7 +70,7 @@ export function EnrollmentModal({
             </div>
           </div>
 
-          <div className="border-t border-border pt-4">
+          <div className="border-t border-border/60 pt-4">
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -89,14 +89,14 @@ export function EnrollmentModal({
             <Button
               onClick={onClose}
               variant="outline"
-              className="flex-1 border-border hover:bg-background"
+              className="flex-1 border-border/60 hover:bg-slate-50 dark:hover:bg-gray-700 rounded-xl"
             >
               Cancel
             </Button>
             <Button
               onClick={onConfirm}
               disabled={!agreedToTerms || loading}
-              className="flex-1 bg-primary hover:bg-primary/90"
+              className="flex-1 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white rounded-xl shadow-lg"
             >
               {loading ? 'Enrolling...' : 'Confirm Enrollment'}
             </Button>

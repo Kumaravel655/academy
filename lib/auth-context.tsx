@@ -1,11 +1,13 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { api } from './api';
 
 export interface User {
   id: string;
   email: string;
   name: string;
+  isAdmin: boolean;
   createdAt: string;
 }
 
@@ -24,67 +26,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Initialize auth from localStorage
+  // Initialize auth from stored JWT token
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (error) {
-        console.error('Failed to parse saved user:', error);
-      }
+    const token = localStorage.getItem('token');
+    if (token) {
+      api.auth.me()
+        .then((userData: any) => setUser(userData))
+        .catch(() => localStorage.removeItem('token'))
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   const signup = async (email: string, password: string, name: string) => {
-    // Check if user already exists
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    if (users.some((u: any) => u.email === email)) {
-      throw new Error('Email already registered');
-    }
-
-    // Create new user
-    const newUser: User = {
-      id: Math.random().toString(36).substr(2, 9),
-      email,
-      name,
-      createdAt: new Date().toISOString(),
-    };
-
-    // Store user credentials (in production, use proper password hashing)
-    users.push({
-      email,
-      password: password, // Note: In production, hash the password!
-      ...newUser,
-    });
-
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('user', JSON.stringify(newUser));
-    setUser(newUser);
+    const data = await api.auth.signup(email, password, name);
+    localStorage.setItem('token', data.accessToken);
+    setUser(data.user);
   };
 
   const login = async (email: string, password: string) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const foundUser = users.find((u: any) => u.email === email && u.password === password);
-
-    if (!foundUser) {
-      throw new Error('Invalid email or password');
-    }
-
-    const loggedInUser: User = {
-      id: foundUser.id,
-      email: foundUser.email,
-      name: foundUser.name,
-      createdAt: foundUser.createdAt,
-    };
-
-    localStorage.setItem('user', JSON.stringify(loggedInUser));
-    setUser(loggedInUser);
+    const data = await api.auth.login(email, password);
+    localStorage.setItem('token', data.accessToken);
+    setUser(data.user);
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setUser(null);
   };
 

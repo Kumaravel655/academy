@@ -1,7 +1,24 @@
+import type { Metadata } from 'next';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { ContactForm } from '@/components/contact-form';
 import { Mail, MapPin, Phone, Clock } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description:
+    'Get in touch with Sunshine Academy in Arakkonam, Tamil Nadu. Call us at +91 95003 47142 or email support@velandev.com. We reply within 24 hours.',
+  keywords: [
+    'contact Sunshine Academy',
+    'Sunshine Academy Arakkonam phone number',
+    'online course support Tamil Nadu',
+    'Sunshine Academy address',
+  ],
+  openGraph: {
+    title: 'Contact Sunshine Academy — Arakkonam, Tamil Nadu',
+    description: 'Reach out to our team. Phone: +91 95003 47142 | Arakkonam, Tamil Nadu.',
+  },
+};
 
 export default function ContactPage() {
   const contactInfo = [
@@ -14,14 +31,14 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: 'Phone',
-      details: '+91 1800 1234 5678',
+      details: '+91 95003 47142',
       description: 'Monday to Friday, 9 AM to 6 PM IST',
     },
     {
       icon: MapPin,
       title: 'Office',
-      details: 'Bangalore, India',
-      description: 'Tech Hub, Building 42, 3rd Floor',
+      details: 'Arakkonam, Tamil Nadu',
+      description: 'Arakkonam, Tamil Nadu - 631001',
     },
     {
       icon: Clock,
@@ -32,21 +49,23 @@ export default function ContactPage() {
   ];
 
   return (
-    <main>
+    <main className="overflow-hidden">
       <Header />
 
       {/* Page Header */}
-      <section className="bg-gradient-to-b from-primary/10 to-background py-16 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold text-foreground mb-6">Get in Touch</h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-primary/95 to-slate-900" />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">Get in Touch</h1>
+          <p className="text-xl text-white/70 max-w-2xl mx-auto">
             Have questions about our courses? Want to suggest a new topic? We'd love to hear from you!
           </p>
         </div>
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
             {contactInfo.map((info, idx) => {
@@ -54,7 +73,7 @@ export default function ContactPage() {
               return (
                 <div
                   key={idx}
-                  className="bg-card border border-border rounded-lg p-6 text-center hover:border-primary transition-colors"
+                  className="bg-card border border-border/60 rounded-2xl p-6 text-center hover:border-primary/30 transition-all duration-500 hover-lift"
                 >
                   <Icon size={32} className="text-primary mx-auto mb-4" />
                   <h3 className="text-lg font-bold text-foreground mb-2">
@@ -74,40 +93,40 @@ export default function ContactPage() {
             </div>
 
             {/* FAQ Quick Links */}
-            <div className="bg-card border border-border rounded-lg p-8">
+            <div className="bg-white dark:bg-gray-800 border border-border/60 rounded-2xl p-8 shadow-sm">
               <h3 className="text-2xl font-bold text-foreground mb-6">Quick Links</h3>
 
-              <div className="space-y-4">
-                <div className="bg-background/50 rounded-lg p-4 hover:border-primary border border-border transition-colors cursor-pointer">
-                  <h4 className="font-semibold text-foreground mb-2">Course Enrollment</h4>
+              <div className="space-y-3">
+                <div className="bg-slate-50 dark:bg-gray-700 rounded-xl p-4 hover:border-primary/40 border border-border/60 transition-all cursor-pointer hover:shadow-sm">
+                  <h4 className="font-semibold text-foreground mb-1">Course Enrollment</h4>
                   <p className="text-sm text-muted-foreground">
                     Questions about enrolling in a course?
                   </p>
                 </div>
 
-                <div className="bg-background/50 rounded-lg p-4 hover:border-primary border border-border transition-colors cursor-pointer">
-                  <h4 className="font-semibold text-foreground mb-2">Technical Support</h4>
+                <div className="bg-slate-50 dark:bg-gray-700 rounded-xl p-4 hover:border-primary/40 border border-border/60 transition-all cursor-pointer hover:shadow-sm">
+                  <h4 className="font-semibold text-foreground mb-1">Technical Support</h4>
                   <p className="text-sm text-muted-foreground">
                     Having issues with the platform?
                   </p>
                 </div>
 
-                <div className="bg-background/50 rounded-lg p-4 hover:border-primary border border-border transition-colors cursor-pointer">
-                  <h4 className="font-semibold text-foreground mb-2">Billing & Refunds</h4>
+                <div className="bg-slate-50 dark:bg-gray-700 rounded-xl p-4 hover:border-primary/40 border border-border/60 transition-all cursor-pointer hover:shadow-sm">
+                  <h4 className="font-semibold text-foreground mb-1">Billing & Refunds</h4>
                   <p className="text-sm text-muted-foreground">
                     Payment and refund related inquiries
                   </p>
                 </div>
 
-                <div className="bg-background/50 rounded-lg p-4 hover:border-primary border border-border transition-colors cursor-pointer">
-                  <h4 className="font-semibold text-foreground mb-2">Course Suggestions</h4>
+                <div className="bg-slate-50 dark:bg-gray-700 rounded-xl p-4 hover:border-primary/40 border border-border/60 transition-all cursor-pointer hover:shadow-sm">
+                  <h4 className="font-semibold text-foreground mb-1">Course Suggestions</h4>
                   <p className="text-sm text-muted-foreground">
                     Suggest a new course or topic
                   </p>
                 </div>
 
-                <div className="bg-background/50 rounded-lg p-4 hover:border-primary border border-border transition-colors cursor-pointer">
-                  <h4 className="font-semibold text-foreground mb-2">Partnerships</h4>
+                <div className="bg-slate-50 dark:bg-gray-700 rounded-xl p-4 hover:border-primary/40 border border-border/60 transition-all cursor-pointer hover:shadow-sm">
+                  <h4 className="font-semibold text-foreground mb-1">Partnerships</h4>
                   <p className="text-sm text-muted-foreground">
                     Corporate training and collaborations
                   </p>
@@ -119,13 +138,14 @@ export default function ContactPage() {
       </section>
 
       {/* Common Questions */}
-      <section className="py-20 bg-card/50 border-y border-border">
+      <section className="py-20 bg-gradient-to-b from-slate-50/80 to-white dark:from-gray-900/80 dark:to-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-foreground mb-12 text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-2 text-center">
             Frequently Asked Questions
           </h2>
+          <p className="text-muted-foreground text-center mb-12">Quick answers to common questions</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 q: 'How do I enroll in a course?',
@@ -152,9 +172,9 @@ export default function ContactPage() {
                 a: 'You have lifetime access to all courses you enroll in, including future updates and new lessons.',
               },
             ].map((item, idx) => (
-              <div key={idx}>
+              <div key={idx} className="bg-white dark:bg-gray-800 border border-border/60 rounded-xl p-6 hover:shadow-md transition-shadow">
                 <h3 className="font-semibold text-foreground mb-2">{item.q}</h3>
-                <p className="text-muted-foreground text-sm">{item.a}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{item.a}</p>
               </div>
             ))}
           </div>
@@ -162,20 +182,23 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section (Placeholder) */}
-      <section className="py-16 bg-background">
+      <section className="py-20 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-foreground mb-8 text-center">
+          <h2 className="text-3xl font-bold text-foreground mb-2 text-center">
             Find Us
           </h2>
+          <p className="text-muted-foreground text-center mb-10">Visit our office in Arakkonam</p>
 
-          <div className="bg-card border border-border rounded-lg h-96 flex items-center justify-center">
+          <div className="bg-gradient-to-br from-slate-50 to-primary/5 dark:from-gray-800 dark:to-primary/10 border border-border/60 rounded-2xl h-96 flex items-center justify-center shadow-sm">
             <div className="text-center">
-              <MapPin size={48} className="text-primary/20 mx-auto mb-4" />
-              <p className="text-muted-foreground">
-                Bangalore, India
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mx-auto mb-4">
+                <MapPin size={36} className="text-primary" />
+              </div>
+              <p className="text-foreground font-semibold text-lg">
+                Arakkonam, Tamil Nadu
               </p>
               <p className="text-muted-foreground text-sm mt-2">
-                Tech Hub, Building 42, 3rd Floor
+                Arakkonam, Tamil Nadu - 631001
               </p>
             </div>
           </div>

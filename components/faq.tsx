@@ -14,23 +14,24 @@ export function FAQComponent({ faqs }: FAQProps) {
   if (!faqs.length) return null;
 
   return (
-    <section className="py-16 border-t border-border">
+    <section className="py-16">
       <div className="max-w-2xl">
-        <h2 className="text-3xl font-bold text-foreground mb-12">
+        <h2 className="text-3xl font-bold text-foreground mb-2">
           Frequently Asked Questions
         </h2>
+        <p className="text-muted-foreground mb-10">Common questions about this course</p>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq) => (
             <div
               key={faq.id}
-              className="border border-border rounded-lg overflow-hidden bg-card/50 hover:border-primary/30 transition-colors"
+              className="border border-border/60 rounded-xl overflow-hidden bg-white dark:bg-gray-800/80 hover:border-primary/30 transition-all hover:shadow-sm"
             >
               <button
                 onClick={() =>
                   setOpenId(openId === faq.id ? null : faq.id)
                 }
-                className="w-full flex items-center justify-between p-5 hover:bg-background/50 transition-colors"
+                className="w-full flex items-center justify-between p-5 hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors"
               >
                 <h3 className="text-lg font-semibold text-foreground text-left">
                   {faq.question}
@@ -44,8 +45,8 @@ export function FAQComponent({ faqs }: FAQProps) {
               </button>
 
               {openId === faq.id && (
-                <div className="px-5 pb-5 border-t border-border/50 bg-background/30">
-                  <p className="text-muted-foreground leading-relaxed">
+                <div className="px-5 pb-5 border-t border-border/40 bg-slate-50/30 dark:bg-white/5">
+                  <p className="text-muted-foreground leading-relaxed pt-4">
                     {faq.answer}
                   </p>
                 </div>

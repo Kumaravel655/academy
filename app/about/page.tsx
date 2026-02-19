@@ -1,6 +1,8 @@
+import type { Metadata } from 'next';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { instructors } from '@/lib/courses-data';
+import { instructors as staticInstructors } from '@/lib/courses-data';
+import { API_BASE, transformKeys } from '@/lib/api';
 import { Badge } from '@/components/ui/badge';
 import {
   CheckCircle2,
@@ -9,7 +11,33 @@ import {
   Zap,
 } from 'lucide-react';
 
-export default function AboutPage() {
+export const metadata: Metadata = {
+  title: 'About Us',
+  description:
+    'Learn about Sunshine Academy — a premier online learning platform based in Arakkonam, Tamil Nadu. Expert instructors, 50+ courses, 2,500+ students.',
+  keywords: [
+    'about Sunshine Academy',
+    'Sunshine Academy instructors',
+    'online learning platform Tamil Nadu',
+    'best coding academy Arakkonam',
+  ],
+  openGraph: {
+    title: 'About Sunshine Academy | Arakkonam, Tamil Nadu',
+    description: 'Expert-led learning platform with 50+ courses and 2,500+ students. Based in Arakkonam, Tamil Nadu.',
+  },
+};
+
+export default async function AboutPage() {
+  // Fetch instructors from backend API, fall back to static data
+  let instructors = staticInstructors as any[];
+  try {
+    const res = await fetch(`${API_BASE}/api/admin/instructors`, { cache: 'no-store' });
+    if (res.ok) {
+      const data = transformKeys(await res.json());
+      instructors = data.map((i: any) => ({ ...i, courses: i.coursesCount }));
+    }
+  } catch {}
+
   const stats = [
     { number: '2500+', label: 'Active Students' },
     { number: '50+', label: 'Courses Offered' },
@@ -36,16 +64,18 @@ export default function AboutPage() {
   ];
 
   return (
-    <main>
+    <main className="overflow-hidden">
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/10 to-background py-16 border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl font-bold text-foreground mb-6">
-            About Velandev Academy
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-primary/95 to-slate-900" />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight">
+            About Sunshine Academy
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-white/70 max-w-2xl mx-auto">
             Empowering the next generation of developers through quality education, practical learning,
             and industry expertise.
           </p>
@@ -53,12 +83,12 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {/* Mission */}
-            <div className="bg-card border border-border rounded-lg p-10">
-              <h2 className="text-2xl font-bold text-foreground mb-4">Our Mission</h2>
+            <div className="bg-card border border-border/60 rounded-2xl p-10 hover-lift transition-all duration-500">
+              <h2 className="text-2xl font-extrabold text-foreground mb-4">Our Mission</h2>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 To make high-quality tech education accessible to everyone, regardless of their background or location.
                 We believe that everyone deserves the opportunity to learn, grow, and build a successful career in
@@ -67,8 +97,8 @@ export default function AboutPage() {
             </div>
 
             {/* Vision */}
-            <div className="bg-card border border-border rounded-lg p-10">
-              <h2 className="text-2xl font-bold text-foreground mb-4">Our Vision</h2>
+            <div className="bg-card border border-border/60 rounded-2xl p-10 hover-lift transition-all duration-500">
+              <h2 className="text-2xl font-extrabold text-foreground mb-4">Our Vision</h2>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 To become the leading platform for practical tech education, where students can master in-demand skills
                 and launch rewarding careers. We envision a world where technology education is affordable, accessible,
@@ -80,15 +110,17 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="py-20 bg-primary/5 border-y border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-primary/95 to-slate-900" />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, idx) => (
               <div key={idx} className="text-center">
-                <p className="text-4xl sm:text-5xl font-bold text-primary mb-2">
+                <p className="text-4xl sm:text-5xl font-extrabold text-white mb-2">
                   {stat.number}
                 </p>
-                <p className="text-muted-foreground font-medium">{stat.label}</p>
+                <p className="text-white/60 font-medium">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -96,10 +128,10 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-foreground mb-16 text-center">
-            Our Core Values
+          <h2 className="text-4xl font-extrabold text-foreground mb-16 text-center tracking-tight">
+            Our Core <span className="text-gradient-primary">Values</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -108,13 +140,13 @@ export default function AboutPage() {
               return (
                 <div
                   key={idx}
-                  className="bg-card border border-border rounded-lg p-8 text-center hover:border-primary transition-colors"
+                  className="bg-card border border-border/60 rounded-2xl p-8 text-center hover:border-primary/30 transition-all duration-500 hover-lift"
                 >
                   <Icon size={48} className="text-primary mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-foreground mb-3">
                     {value.title}
                   </h3>
-                  <p className="text-muted-foreground">{value.description}</p>
+                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
                 </div>
               );
             })}
@@ -123,10 +155,10 @@ export default function AboutPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-card/50 border-y border-border">
+      <section className="py-20 bg-gradient-to-b from-slate-50/50 to-white dark:from-gray-900/50 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-foreground mb-12 text-center">
-            Why Choose Velandev?
+          <h2 className="text-4xl font-extrabold text-foreground mb-12 text-center tracking-tight">
+            Why Choose <span className="text-gradient-primary">Sunshine Academy?</span>
           </h2>
 
           <div className="max-w-3xl mx-auto space-y-4">
@@ -140,8 +172,8 @@ export default function AboutPage() {
               'Career guidance and job placement assistance',
               'Certificate of completion recognized by employers',
             ].map((reason, idx) => (
-              <div key={idx} className="flex items-start gap-4 bg-background p-4 rounded-lg border border-border hover:border-primary transition-colors">
-                <CheckCircle2 size={24} className="text-primary flex-shrink-0 mt-1" />
+              <div key={idx} className="flex items-start gap-4 bg-white dark:bg-gray-800 p-5 rounded-2xl border border-border/60 hover:border-primary/30 transition-all duration-300 hover-lift">
+                <CheckCircle2 size={24} className="text-primary flex-shrink-0 mt-0.5" />
                 <p className="text-lg text-foreground">{reason}</p>
               </div>
             ))}
@@ -150,10 +182,10 @@ export default function AboutPage() {
       </section>
 
       {/* Team/Instructors */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white dark:bg-gray-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-foreground mb-4 text-center">
-            Meet Our Instructors
+          <h2 className="text-4xl font-extrabold text-foreground mb-4 text-center tracking-tight">
+            Meet Our <span className="text-gradient-primary">Instructors</span>
           </h2>
           <p className="text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
             Learn from industry professionals who are passionate about teaching and mentoring.
@@ -163,10 +195,10 @@ export default function AboutPage() {
             {instructors.map((instructor) => (
               <div
                 key={instructor.id}
-                className="bg-card border border-border rounded-lg overflow-hidden hover:border-primary transition-colors"
+                className="bg-card border border-border/60 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 hover-lift"
               >
                 {/* Avatar */}
-                <div className="h-48 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-5xl font-bold text-primary/30">
+                <div className="h-48 bg-gradient-to-br from-primary via-accent to-primary flex items-center justify-center text-5xl font-bold text-white/30">
                   {instructor.name[0]}
                 </div>
 
@@ -214,9 +246,9 @@ export default function AboutPage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-20 bg-card/50 border-y border-border">
+      <section className="py-20 bg-gradient-to-b from-slate-50/50 to-white dark:from-gray-900/50 dark:to-gray-900">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-foreground mb-8">Our Story</h2>
+          <h2 className="text-3xl font-extrabold text-foreground mb-8 tracking-tight">Our <span className="text-gradient-primary">Story</span></h2>
 
           <div className="space-y-6 text-muted-foreground leading-relaxed">
             <p>

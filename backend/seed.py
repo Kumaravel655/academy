@@ -416,24 +416,6 @@ def seed():
         )
         db.add(instructor)
 
-    # ── Demo admin user ──
-    admin = User(
-        email="admin@velandev.com",
-        name="Admin",
-        hashed_password=hash_password("admin123"),
-        is_admin=True,
-    )
-    db.add(admin)
-
-    # ── Demo regular user ──
-    demo = User(
-        email="demo@velandev.com",
-        name="Demo User",
-        hashed_password=hash_password("demo123"),
-        is_admin=False,
-    )
-    db.add(demo)
-
     db.commit()
     db.close()
     print("Database seeded successfully!")

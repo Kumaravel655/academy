@@ -24,13 +24,6 @@ uvicorn main:app --reload
 
 The interactive API docs are at **http://localhost:8000/docs**.
 
-## Demo Accounts
-
-| Email               | Password  | Role  |
-|---------------------|-----------|-------|
-| admin@velandev.com  | admin123  | Admin |
-| demo@velandev.com   | demo123   | User  |
-
 ## API Endpoints
 
 ### Auth

@@ -3,7 +3,7 @@
  * Handles snake_case → camelCase conversion and JWT auth headers.
  */
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+export const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4566';
 
 // ── Key transformation ──
 

@@ -1,7 +1,7 @@
 """
 Sunshine Academy – FastAPI Backend
 ===================================
-Entry point. Run with:  uvicorn main:app --reload
+Entry point. Run with:  uvicorn main:app --reload --port 4566
 """
 
 from fastapi import FastAPI
@@ -48,3 +48,8 @@ def root():
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=4566, reload=True)

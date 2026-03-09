@@ -74,7 +74,7 @@ export default function CoursesPage() {
     }
 
     return result;
-  }, [searchTerm, selectedCategory, selectedLevel, selectedPrice, sortBy]);
+  }, [courses, searchTerm, selectedCategory, selectedLevel, selectedPrice, sortBy]);
 
   return (
     <main className="overflow-hidden">
